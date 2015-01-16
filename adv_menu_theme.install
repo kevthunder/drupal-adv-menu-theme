@@ -1,0 +1,25 @@
+<?php
+
+/**
+ * @file
+ * Installation file for the adv_menu_theme module.
+ */
+
+/**
+ * Implementation of hook_install().
+ */
+function adv_menu_theme_install() {
+}
+
+/**
+ * Implementation of hook_uninstall().
+ */
+function adv_menu_theme_uninstall() {
+}
+
+/**
+ * Implementation of hook_schema_alter().
+ */
+function adv_menu_theme_schema_alter(&$schema) {
+}
+

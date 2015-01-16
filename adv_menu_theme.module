@@ -1,0 +1,62 @@
+<?php
+
+/**
+ * @file adv_menu_theme.module
+ * Main file for the adv_menu_theme module.
+ *
+ */
+ 
+include_once 'adv_menu_theme_menu_item.inc';
+include_once 'adv_menu_theme_menu_tree.inc';
+
+/**
+ * Implements hook_theme_registry_alter().
+ */
+function adv_menu_theme_theme_registry_alter(&$theme_registry){
+	if($theme_registry['menu_tree']['function'] == 'theme_menu_tree'){
+		$theme_registry['menu_tree']['function'] = 'theme_adv_menu_tree';
+	}
+	foreach ($theme_registry['menu_tree']['preprocess functions'] as $key => $value) {
+		if ($value == 'template_preprocess_menu_tree') {
+			$theme_registry['menu_tree']['preprocess functions'][$key] = 'adv_menu_theme_permisive_preprocess_menu_tree';
+		}
+	}
+	dpm($theme_registry['menu_tree']);
+}
+
+function adv_menu_theme_permisive_preprocess_menu_tree(&$variables){
+	$variables['full_tree'] = $variables['tree'];
+	$variables['attributes'] = array('class'=>'menu');
+	if(!empty($variables['full_tree']['#attributes'])){
+		$variables['attributes'] = array_merge($variables['attributes'],$variables['full_tree']['#attributes']);
+	}
+	template_preprocess_menu_tree($variables);
+}
+
+function theme_adv_menu_tree($variables) {
+	dpm($variables);
+  return '<ul'.drupal_attributes($variables['attributes']).'>' . $variables['tree'] . '</ul>';
+}
+
+/**
+ * Implements hook_preprocess_menu_tree().
+ */
+function adv_menu_theme_preprocess_menu_tree(&$vars,$hook) {
+	$tree = new AdvMenuThemeMenuTree($vars);
+	// dpm($vars);
+}
+ 
+/**
+ * Implements hook_preprocess_menu_link().
+ */
+function adv_menu_theme_preprocess_menu_link(&$vars,$hook) {
+	$item = new AdvMenuThemeMenuItem($vars);
+	// dpm($vars);
+}
+
+function adv_menu_theme_render($menu_name, $options = array()){
+	$menu = menu_tree_output(menu_tree_page_data('main-menu'), 1);
+	$menu = array_merge($menu,$options);
+	return render($menu);
+}
+

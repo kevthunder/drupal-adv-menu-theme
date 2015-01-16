@@ -1,0 +1,9 @@
+name = Advanced Menu Theming
+description = Add many possible templates for menus
+dependencies[] = menu
+dependencies[] = menu_attributes
+core = 7.x
+files[] = adv_menu_theme.module
+files[] = adv_menu_theme.install
+
+
