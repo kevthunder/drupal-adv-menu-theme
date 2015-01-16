@@ -1,5 +1,25 @@
 # Advanced Menu Theming for Drupal 7
 
+## Les templates possible
+
+### `menu-tree(...)`
+Contient ce qui est normalement un `<ul>`
+
+### `menu-link(...)`
+Contient ce qui est normalement un `<li>`
+
+### `menu-link--lvl[0-9]` ou `menu-tree--lvl[0-9]`
+Ces templates ne s'appliquerons uniquement pour le niveaux de profonder spécifier(lvl)
+
+### `menu-link--[classname]`
+Ces templates ne s'appliquerons que si l'item de menu contient la class spécifié (la class est configurable dans l'admin `/admin/structure/menu`)
+
+### `menu-link--[classname]-child` ou `menu-tree--[classname]-child`
+Ces templates sont appliqué à tous les sous menu qui sont enfant à un menu ayant la class spécifié
+
+### `menu-link--lvl[0-9]--[classname]-child` ou `menu-link--lvl[0-9]--[classname]-child`
+lvl et classname-child peuvent être combiner enssemble
+
 ## Example
 
 ### Pour généré ce menu :
