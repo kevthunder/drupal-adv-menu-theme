@@ -21,7 +21,7 @@ function adv_menu_theme_theme_registry_alter(&$theme_registry){
 			$theme_registry['menu_tree']['preprocess functions'][$key] = 'adv_menu_theme_permisive_preprocess_menu_tree';
 		}
 	}
-	dpm($theme_registry['menu_tree']);
+	// dpm($theme_registry['menu_tree']);
 }
 
 function adv_menu_theme_permisive_preprocess_menu_tree(&$variables){
@@ -34,7 +34,7 @@ function adv_menu_theme_permisive_preprocess_menu_tree(&$variables){
 }
 
 function theme_adv_menu_tree($variables) {
-	dpm($variables);
+	// dpm($variables);
   return '<ul'.drupal_attributes($variables['attributes']).'>' . $variables['tree'] . '</ul>';
 }
 
@@ -60,3 +60,22 @@ function adv_menu_theme_render($menu_name, $options = array()){
 	return render($menu);
 }
 
+function adv_menu_node_menu_trail($node){
+  $nodeId = is_numeric($node)?$node:$node->nid;
+  $mItem = menu_link_get_preferred('node/'.$nodeId);
+  $tree = menu_tree_page_data($mItem['menu_name'],null,true);
+  return _adv_menu_node_menu_trail($mItem,$tree);
+}
+
+function _adv_menu_node_menu_trail($mItem,$tree,$path=array()){
+  if(!empty($tree)){
+    foreach($tree as $l){
+      $cpath = array_merge($path,array($l['link']));
+      if($l['link']['mlid'] == $mItem['mlid']){
+        return $cpath;
+      }
+      $res = _adv_menu_node_menu_trail($mItem,$l['below'],$cpath);
+      if(!empty($res)) return $res;
+    }
+  }
+}
