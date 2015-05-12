@@ -70,7 +70,7 @@ menu-link--main-menu--lvl0.tpl.php
 
 ```php
   <li<?php echo drupal_attributes($element['#attributes']); ?>>
-    <span class="icon"></span><?php l($element['#title'], $element['#href'], $element['#localized_options']); ?>
+    <span class="icon"></span><?php echo l($element['#title'], $element['#href'], $element['#localized_options']); ?>
     <?php echo drupal_render($element['#below']); ?>
   </li>
 ```
@@ -108,4 +108,13 @@ menu-link--main-menu--lvl1--complex-child.tpl.php
     <img src="thumbnail.jpg" alt=""><?php l($element['#title'], $element['#href'], $element['#localized_options']); ?>
     <?php echo drupal_render($element['#below']); ?>
   </div>
+```
+### Intégrer votre menu dans le template de la façon suivante:
+
+```php
+  <?php 
+    if(function_exists('adv_menu_theme_render')){
+      echo adv_menu_theme_render('main-menu',array('#attributes'=>array('id' => 'primary', 'class' => array('links', 'clearfix', 'main-menu', 'wrap'))));
+    }
+  ?>  
 ```
