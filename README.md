@@ -1,5 +1,14 @@
 # Advanced Menu Theming for Drupal 7
 
+## Installation
+
+The module must by placed in a folder named `adv_menu_theme` inside `sites/all/modules` or `sites/default/modules` 
+
+It can then be activated via the admin or with drush :
+```sh
+drush en adv_menu_theme
+```
+
 ## Les templates possible
 
 ### `menu-tree(...)`
