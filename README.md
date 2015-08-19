@@ -123,7 +123,13 @@ menu-link--main-menu--lvl1--complex-child.tpl.php
 ```php
   <?php 
     if(function_exists('adv_menu_theme_render')){
-      echo adv_menu_theme_render('main-menu',array('#attributes'=>array('id' => 'primary', 'class' => array('links', 'clearfix', 'main-menu', 'wrap'))));
+      echo adv_menu_theme_render('main-menu', array(
+        '#attributes'=>array(
+          'id' => 'primary', 
+          'class' => array('links', 'clearfix', 'main-menu', 'wrap')
+        ),
+        // '#max_depth'=>2 // Limit the depth menus can be nested
+      ));
     }
   ?>  
 ```

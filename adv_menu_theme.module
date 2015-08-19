@@ -55,9 +55,24 @@ function adv_menu_theme_preprocess_menu_link(&$vars,$hook) {
 }
 
 function adv_menu_theme_render($menu_name, $options = array()){
-	$menu = menu_tree_output(menu_tree_page_data('main-menu'), 1);
+  $menu_data = menu_tree_page_data('main-menu');
+  if(!empty($options['#max_depth'])){
+    $menu_data = adv_menu_theme_max_depth($menu_data, $options['#max_depth']);
+  }
+	$menu = menu_tree_output($menu_data, 1);
 	$menu = array_merge($menu,$options);
 	return render($menu);
+}
+
+function adv_menu_theme_max_depth($menu_data, $max, $depth = 1){
+  foreach($menu_data as &$menu){
+    if($depth >= $max){
+      $menu['below'] = array();
+    }else{
+      $menu['below'] = adv_menu_theme_max_depth($menu['below'], $max, $depth+1);
+    }
+  }
+  return $menu_data;
 }
 
 function adv_menu_node_menu_trail($node){
